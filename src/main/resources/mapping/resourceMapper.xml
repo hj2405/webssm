@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.ResourceDao">
+
+    <select id="findOneMenu" resultType="com.ssm.model.Resource" parameterType="int">
+        SELECT t.res_id id ,t.res_parentId parentId,t.res_name name,t.res_status status,t.res_model_code modelCode,
+        t.res_link_address linkAddr,t.res_image image,t.res_level level,t.res_type type,t.res_display_order displayOrder,
+        t.res_remark remark
+        FROM ssm_resource t WHERE t.res_level = #{level} ORDER BY t.res_display_order ASC
+    </select>
+
+    <select id="findByParentId" resultType="com.ssm.model.Resource" parameterType="int">
+        SELECT t.res_id id ,t.res_parentId parentId,t.res_name name,t.res_status status,t.res_model_code modelCode,
+        t.res_link_address linkAddr,t.res_image image,t.res_level level,t.res_type type,t.res_display_order displayOrder,
+        t.res_remark remark
+        FROM ssm_resource t WHERE t.res_parentId = #{pId} ORDER BY t.res_display_order ASC
+    </select>
+
+    <select id="hasChildren" resultType="Integer" parameterType="int">
+        SELECT count(1) FROM ssm_resource t WHERE  t.res_parentId = #{pId}
+    </select>
+</mapper>
